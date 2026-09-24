@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h3>List of All Users</h3>
+    <table border="1">
+        <thead>
+        <th>#</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="user,stat : ${users}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.genderStatus}"></td>
+            <td th:text="${user.accountStatus}"></td>
+            <td th:text="${user.roleName}"></td>
+            <td>
+                <a th:href="@{/api/v1/users/{userId}/edit(userId=${user.id})}"><button>Edit</button></a>
+                <a><button>Delete</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

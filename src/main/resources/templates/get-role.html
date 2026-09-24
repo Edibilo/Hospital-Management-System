@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Roles</title>
+</head>
+<body>
+<div align="center">
+    <span th:if="${success}" th:text="${success}" style="color:green"></span>
+    <div th:if="${fail}" th:text="${fail}" style="color:red"></div>
+    <div th:replace="~{header :: header}"></div>
+    <h3>Role Form</h3>
+    <form method="post" th:action="@{/api/v1/roles}" th:object="${role}">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{name}" placeholder="Enter Role Name" required><br/><br/>
+
+        <button th:text="${role.id==null ? 'SAVE' : 'UPDATE'}"></button>
+    </form>
+    <h3>Role List</h3>
+    <table border="1">
+        <thead>
+        <th>#</th>
+        <th>Role</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="role,stat : ${roles}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${role.name}"></td>
+            <td>
+                <a th:href="@{/api/v1/roles/{roleId}/edit(roleId=${role.id})}"><button>Edit</button></a>
+                <a th:href="@{/api/v1/roles/{roleId}/delete(roleId=${role.id})}"><button>Delete</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

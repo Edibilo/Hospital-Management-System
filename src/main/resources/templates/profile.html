@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<div align="center">
+    <p th:if="${success}" th:text="${success}" style="color:green"></p>
+    <p th:if="${fail}" th:text="${fail}" style="color:red"></p>
+    <div th:replace="~{header :: header}"></div>
+    <h2>My Profile</h2>
+    <p>Username :<strong th:text="${profile.username}"></strong></p>
+    <p>Email :<strong th:text="${profile.email}"></strong></p>
+    <p>Gender :<strong th:text="${profile.genderStatus}"></strong></p>
+    <p>Account Status :<strong th:text="${profile.accountStatus}"></strong></p>
+    <p>Role Name :<strong th:text="${profile.roleName}"></strong></p>
+    <a th:href="@{/api/v1/users/edit/profile}"><button>Update Profile</button></a>
+</div>
+</body>
+</html>

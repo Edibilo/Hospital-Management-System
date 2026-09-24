@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h3>User Form</h3>
+    <form method="post" th:action="@{/api/v1/auth/register}" th:object="${user}">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{username}" placeholder="Enter Username" required><br/>
+        <input type="email" th:field="*{email}" placeholder="Enter Email" required><br/>
+        <input type="password" th:field="*{password}" placeholder="Enter Password" required><br/>
+        <select th:field="*{genderStatus}" required>
+            <option value="">Select Gender</option>
+            <option th:each="g : ${gender}" th:value="${g}" th:text="${g}"></option>
+        </select><br/>
+        <select th:field="*{accountStatus}" required sec:authorize="hasRole('ADMIN')">
+            <option value="">Select Account Status</option>
+            <option th:each="a : ${account}" th:value="${a}" th:text="${a}"></option>
+        </select><br/>
+        <input type="hidden" th:field="*{accountStatus}" sec:authorize="!hasRole('ADMIN')">
+        <select th:field="*{roleId}" required sec:authorize="hasRole('ADMIN')">
+            <option value="">Select Role</option>
+            <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.name}"></option>
+        </select><br/><br/>
+        <input type="hidden" th:field="*{roleId}" sec:authorize="!hasRole('ADMIN')"><br/>
+        <button th:text="${user.id==null ? 'SAVE' : 'UPDATE' }"></button>
+    </form>
+</div>
+</body>
+</html>

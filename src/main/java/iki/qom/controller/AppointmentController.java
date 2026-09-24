@@ -1,0 +1,39 @@
+package iki.qom.controller;
+
+import iki.qom.dto.AppointmentDto;
+import iki.qom.enumerator.AppointmentStatus;
+import iki.qom.service.AppointmentService;
+import iki.qom.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping("api/v1/appointments")
+@Controller
+public class AppointmentController {
+
+    private final AppointmentService appointmentService;
+    private final UserService userService;
+
+    public AppointmentController(AppointmentService appointmentService, UserService userService) {
+        this.appointmentService = appointmentService;
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public String getAppointment(Model model) {
+        model.addAttribute("appointment", new AppointmentDto());
+        model.addAttribute("appointmentStatus", AppointmentStatus.values());
+        model.addAttribute("doctors", userService.getAllDoctors());
+        return "get-appointment";
+    }
+
+    @PostMapping
+    public String saveAppointment(@ModelAttribute AppointmentDto appointmentDto) {
+        appointmentService.createAppointment(appointmentDto);
+        return "redirect:/api/v1/appointments";
+    }
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h3>Appointment Form</h3>
+    <form method="post" th:action="@{/api/v1/appointments}" th:object="${appointment}">
+        <input type="date" th:field="*{appointmentDate}" placeholder="Enter AppointmentDate" required><br/><br/>
+        <input type="time" th:field="*{startTime}" placeholder="Enter Start Time" required ><br/><br/>
+        <input type="time" th:field="*{endTime}" placeholder="Enter End Time" required ><br/><br/>
+        <select th:field="*{status}" required sec:authorize="hasRole('ADMIN')">
+            <option value="">Select</option>
+            <option th:each="status : ${appointmentStatus}" th:text="${status}" th:value="${status}"></option>
+        </select><br/><br/>
+        <select th:field="*{doctorId}" required>
+            <option value="">Select</option>
+            <option th:each="d : ${doctors}" th:text="${d.username}" th:value="${d.id}"></option>
+        </select><br/><br/>
+        <button>Save</button>
+    </form>
+</div>
+</body>
+</html>
