@@ -6,22 +6,77 @@
 </head>
 <body>
 <div align="center">
+    <p th:if="${success}" th:text="${success}" style="color:green"></p>
+    <p th:if="${fail}" th:text="${fail}" style="color:red"></p>
     <div th:replace="~{header :: header}"></div>
-    <h3>Appointment Form</h3>
-    <form method="post" th:action="@{/api/v1/appointments}" th:object="${appointment}">
-        <input type="date" th:field="*{appointmentDate}" placeholder="Enter AppointmentDate" required><br/><br/>
-        <input type="time" th:field="*{startTime}" placeholder="Enter Start Time" required ><br/><br/>
-        <input type="time" th:field="*{endTime}" placeholder="Enter End Time" required ><br/><br/>
+    <form method="post" th:action="@{/api/v1/appointments}" th:object="${appointment}" sec:authorize="hasAnyRole('ADMIN','PATIENT')">
+        <h3>Appointment Form</h3>
+        <label>Appointment Date</label>
+        <input type="date" th:field="*{appointmentDate}" placeholder="Enter AppointmentDate" required><br/>
+        <label>Start Time</label>
+        <input type="time" th:field="*{startTime}" placeholder="Enter Start Time" required><br/>
+        <label>End Time</label>
+        <input type="time" th:field="*{endTime}" placeholder="Enter End Time" required ><br/>
+        <label sec:authorize="hasRole('ADMIN')">User Role</label>
         <select th:field="*{status}" required sec:authorize="hasRole('ADMIN')">
             <option value="">Select</option>
             <option th:each="status : ${appointmentStatus}" th:text="${status}" th:value="${status}"></option>
-        </select><br/><br/>
+        </select><br/>
+        <label>Select Doctor</label>
         <select th:field="*{doctorId}" required>
             <option value="">Select</option>
             <option th:each="d : ${doctors}" th:text="${d.username}" th:value="${d.id}"></option>
-        </select><br/><br/>
+        </select><br/>
         <button>Save</button>
-    </form>
+    </form><br>
+    <table border="1" sec:authorize="hasRole('PATIENT')">
+        <thead>
+        <th>#</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Doctor Name</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="a,stat : ${patientAppointments}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${a.appointmentDate}"></td>
+            <td th:text="${a.startTime}"></td>
+            <td th:text="${a.endTime}"></td>
+            <td th:text="${a.status}"></td>
+            <td th:text="${a.doctorName}"></td>
+            <td>
+                <button>Feedback</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table border="1" sec:authorize="hasRole('DOCTOR')">
+        <thead>
+        <th>#</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Patient Name</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="a,stat : ${doctorAppointments}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${a.appointmentDate}"></td>
+            <td th:text="${a.startTime}"></td>
+            <td th:text="${a.endTime}"></td>
+            <td th:text="${a.status}"></td>
+            <td th:text="${a.patientName}"></td>
+            <td>
+                <a th:each="status : ${appointmentStatus}"><button th:text="${status}"></button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

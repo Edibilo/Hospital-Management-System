@@ -1,7 +1,15 @@
 package iki.qom.service;
 
 import iki.qom.dto.AppointmentDto;
+import iki.qom.dto.AppointmentProjectionDto;
+
+import java.util.List;
 
 public interface AppointmentService {
-    AppointmentDto createAppointment(AppointmentDto appointmentDto);
+    void createAppointment(AppointmentDto appointmentDto);
+
+    List<AppointmentProjectionDto> getAllPatientAppointments();
+
+    List<AppointmentProjectionDto> getAllDoctorAppointments();
+
 }

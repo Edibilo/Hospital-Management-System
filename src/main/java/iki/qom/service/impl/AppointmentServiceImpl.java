@@ -1,6 +1,7 @@
 package iki.qom.service.impl;
 
 import iki.qom.dto.AppointmentDto;
+import iki.qom.dto.AppointmentProjectionDto;
 import iki.qom.entity.Appointment;
 import iki.qom.entity.User;
 import iki.qom.mapper.AppointmentMapper;
@@ -10,6 +11,9 @@ import iki.qom.service.AppointmentService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -23,7 +27,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public AppointmentDto createAppointment(AppointmentDto appointmentDto) {
+    public void createAppointment(AppointmentDto appointmentDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         assert authentication != null;
         String email = authentication.getName();
@@ -46,6 +50,30 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
         appointmentRepository.save(appointment);
-        return AppointmentMapper.mapToAppointmentDto(appointment);
+        AppointmentMapper.mapToAppointmentDto(appointment);
     }
+
+    @Override
+    public List<AppointmentProjectionDto> getAllPatientAppointments() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
+        String email = authentication.getName();
+        User patient = userRepository.findUserByEmail(email).orElseThrow(
+                () -> new RuntimeException("User Not Found !")
+        );
+        return appointmentRepository.getAllPatientAppointments(patient);
+    }
+
+    @Override
+    public List<AppointmentProjectionDto> getAllDoctorAppointments() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
+        String email = authentication.getName();
+        User doctor = userRepository.findUserByEmail(email).orElseThrow(
+                () -> new RuntimeException("User Not Found !")
+        );
+        return appointmentRepository.getAllDoctorAppointments(doctor);
+    }
+
+
 }

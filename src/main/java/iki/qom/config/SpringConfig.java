@@ -31,9 +31,8 @@ public class SpringConfig {
                     //register && login
                     request.requestMatchers("/api/v1/auth/**").permitAll();
 
-                    //profile
-                    request.requestMatchers(HttpMethod.GET, "/api/v1/users/profile").hasAnyRole("ADMIN", "DOCTOR", "PATIENT");
-
+                    //users
+                    request.requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAnyRole("ADMIN", "DOCTOR", "PATIENT");
 
                     //users
                   //  request.requestMatchers("/api/v1/users/**").hasRole("ADMIN");

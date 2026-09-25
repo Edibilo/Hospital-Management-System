@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface RoleService {
     String createRole(RoleDto roleDto);
+
     List<RoleDto> getAllRoles();
+
     RoleDto findRoleById(Long roleId);
+
     void deleteRole(Long roleId);
 }
