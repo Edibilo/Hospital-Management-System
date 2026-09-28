@@ -15,14 +15,16 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             "where a.appointmentDate=:aDate AND a.startTime<:eTime AND a.endTime>:sTime AND a.doctor.id=:dId")
     boolean existsByDateStartTimeEndTimeAndDoctorId(LocalDate aDate, LocalTime sTime, LocalTime eTime, Long dId);
 
-    @Query("Select new iki.qom.dto.AppointmentProjectionDto(a.appointmentDate,a.startTime,a.endTime,a.status,d.username,p.username)" +
+    @Query("Select new iki.qom.dto.AppointmentProjectionDto(a.id,a.appointmentDate,a.startTime,a.endTime," +
+            "a.status,d.username,p.username)" +
             " from Appointment a " +
             "join a.patient p " +
             "join a.doctor d " +
             "where p=:patient ")
     List<AppointmentProjectionDto> getAllPatientAppointments(User patient);
 
-    @Query("Select new iki.qom.dto.AppointmentProjectionDto(a.appointmentDate,a.startTime,a.endTime,a.status,d.username,p.username)" +
+    @Query("Select new iki.qom.dto.AppointmentProjectionDto(a.id,a.appointmentDate,a.startTime,a.endTime," +
+            "a.status,d.username,p.username)" +
             " from Appointment a " +
             "join a.patient p " +
             "join a.doctor d " +

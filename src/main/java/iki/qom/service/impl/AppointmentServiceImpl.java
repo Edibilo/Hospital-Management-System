@@ -4,6 +4,7 @@ import iki.qom.dto.AppointmentDto;
 import iki.qom.dto.AppointmentProjectionDto;
 import iki.qom.entity.Appointment;
 import iki.qom.entity.User;
+import iki.qom.enumerator.AppointmentStatus;
 import iki.qom.mapper.AppointmentMapper;
 import iki.qom.repository.AppointmentRepository;
 import iki.qom.repository.UserRepository;
@@ -73,6 +74,15 @@ public class AppointmentServiceImpl implements AppointmentService {
                 () -> new RuntimeException("User Not Found !")
         );
         return appointmentRepository.getAllDoctorAppointments(doctor);
+    }
+
+    @Override
+    public void updateStatus(Long appointmentId, AppointmentStatus status) {
+        Appointment appointment=appointmentRepository.findById(appointmentId).orElseThrow(
+                () -> new RuntimeException("Appointment Not Found !")
+        );
+        appointment.setStatus(status);
+        appointmentRepository.save(appointment);
     }
 
 

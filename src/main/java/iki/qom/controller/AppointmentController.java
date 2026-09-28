@@ -6,10 +6,7 @@ import iki.qom.service.AppointmentService;
 import iki.qom.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping("api/v1/appointments")
@@ -43,5 +40,13 @@ public class AppointmentController {
             redirectAttributes.addFlashAttribute("fail",exception.getMessage());
         }
         return "redirect:/api/v1/appointments";
+    }
+
+    @GetMapping("status/{appointmentId}/{status}")
+    public String updateStatus(Model model,@PathVariable Long appointmentId, @PathVariable AppointmentStatus status){
+        appointmentService.updateStatus(appointmentId,status);
+        model.addAttribute("doctorAppointments",appointmentService.getAllDoctorAppointments());
+        model.addAttribute("appointmentStatus", AppointmentStatus.values());
+        return "get-appointment";
     }
 }

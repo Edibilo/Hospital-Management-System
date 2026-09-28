@@ -72,7 +72,9 @@
             <td th:text="${a.status}"></td>
             <td th:text="${a.patientName}"></td>
             <td>
-                <a th:each="status : ${appointmentStatus}"><button th:text="${status}"></button></a>
+                <a th:each="status : ${appointmentStatus}"
+                   th:href="@{/api/v1/appointments/status/{appointmentId}/{status}(appointmentId=${a.appointmentId},status=${status})}">
+                    <button  th:text="${status}"></button></a>
             </td>
         </tr>
         </tbody>

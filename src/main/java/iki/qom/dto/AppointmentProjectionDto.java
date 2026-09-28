@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AppointmentProjectionDto {
+    private Long appointmentId;
     private LocalDate appointmentDate;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -13,8 +14,9 @@ public class AppointmentProjectionDto {
     private String doctorName;
     private String patientName;
 
-    public AppointmentProjectionDto(LocalDate appointmentDate, LocalTime startTime, LocalTime endTime,
-                                    AppointmentStatus status, String doctorName, String patientName) {
+    public AppointmentProjectionDto(Long appointmentId, LocalDate appointmentDate, LocalTime startTime,
+                                    LocalTime endTime, AppointmentStatus status, String doctorName, String patientName) {
+        this.appointmentId = appointmentId;
         this.appointmentDate = appointmentDate;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -23,8 +25,16 @@ public class AppointmentProjectionDto {
         this.patientName = patientName;
     }
 
-    public AppointmentProjectionDto(){
+    public AppointmentProjectionDto() {
 
+    }
+
+    public Long getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(Long appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
     public LocalDate getAppointmentDate() {
