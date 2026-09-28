@@ -20,9 +20,11 @@ public class UserDto {
     private AccountStatus accountStatus;
     private Long roleId;
     private String roleName;
+    private Long departmentId;
+    private String departmentName;
 
     public UserDto(Long id, String username, String email, String password, GenderStatus genderStatus,
-                   AccountStatus accountStatus, Long roleId, String roleName) {
+                   AccountStatus accountStatus, Long roleId, String roleName, Long departmentId, String departmentName) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -31,6 +33,24 @@ public class UserDto {
         this.accountStatus = accountStatus;
         this.roleId = roleId;
         this.roleName = roleName;
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getRoleName() {

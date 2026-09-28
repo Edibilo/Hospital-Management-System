@@ -32,13 +32,16 @@ public class SpringConfig {
                     request.requestMatchers("/api/v1/auth/**").permitAll();
 
                     //users
-                    request.requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAnyRole("ADMIN", "DOCTOR", "PATIENT");
+                    request.requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAnyRole("ADMIN", "DOCTOR", "PATIENT","PHARMACY");
 
-                    //users
-                  //  request.requestMatchers("/api/v1/users/**").hasRole("ADMIN");
+                    //departments
+                    request.requestMatchers("/api/v1/departments/**").hasRole("ADMIN");
 
                     //appointment
                     request.requestMatchers(HttpMethod.POST, "/api/v1/appointments").hasRole("PATIENT");
+
+                    //medicine
+                    request.requestMatchers(HttpMethod.POST, "/api/v1/medicines").hasAnyRole("ADMIN","PHARMACY");
 
                     request.anyRequest().authenticated();
                 }).formLogin(login -> {

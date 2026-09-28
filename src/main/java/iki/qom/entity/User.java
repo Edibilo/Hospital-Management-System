@@ -21,6 +21,8 @@ public class User {
     private AccountStatus accountStatus;
     @ManyToOne
     private Role role;
+    @ManyToOne
+    private Department department;
 
     public User(){
 
@@ -83,7 +85,7 @@ public class User {
     }
 
     public User(Long id, String username, String email, String password, GenderStatus genderStatus,
-                AccountStatus accountStatus, Role role) {
+                AccountStatus accountStatus, Role role, Department department) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -91,6 +93,15 @@ public class User {
         this.genderStatus = genderStatus;
         this.accountStatus = accountStatus;
         this.role = role;
+        this.department = department;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @PrePersist

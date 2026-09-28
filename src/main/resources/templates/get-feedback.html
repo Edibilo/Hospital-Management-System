@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h2>Feedback Form</h2>
+    <p th:object="${appointment}"></p>
+    <form method="post" th:object="${feedback}"
+          th:action="@{/api/v1/appointments/{appointmentId}/feedback(appointmentId=${appointment.id})}">
+        <input
+        type="text"
+        th:field="*{comment}"
+        placeholder="Enter your Comment"
+        required
+        ><br/>
+        <label>
+            <select th:field="*{rate}" required>
+                <option th:value="1">1</option>
+                <option th:value="2">2</option>
+                <option th:value="3">3</option>
+                <option th:value="4">4</option>
+                <option th:value="5">5</option>
+            </select>
+        </label><br/>
+        <button>Save</button>
+    </form>
+</div>
+</body>
+</html>

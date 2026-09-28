@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -83,6 +82,14 @@ public class AppointmentServiceImpl implements AppointmentService {
         );
         appointment.setStatus(status);
         appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public AppointmentDto findAppointmentById(Long appointmentId) {
+        Appointment appointment=appointmentRepository.findById(appointmentId).orElseThrow(
+                () -> new RuntimeException("Appointment Not Found !")
+        );
+        return AppointmentMapper.mapToAppointmentDto(appointment);
     }
 
 

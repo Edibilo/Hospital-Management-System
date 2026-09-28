@@ -9,9 +9,10 @@
     <p th:if="${success}" th:text="${success}" style="color:green"></p>
     <p th:if="${fail}" th:text="${fail}" style="color:red"></p>
     <div th:replace="~{header :: header}"></div>
-    <form method="post" th:action="@{/api/v1/appointments}" th:object="${appointment}" sec:authorize="hasAnyRole('ADMIN','PATIENT')">
+    <form method="post" th:action="@{/api/v1/appointments}" th:object="${appointment}" sec:authorize="hasAnyRole('PATIENT')">
         <h3>Appointment Form</h3>
         <label>Appointment Date</label>
+        <input type="hidden" th:field="*{id}">
         <input type="date" th:field="*{appointmentDate}" placeholder="Enter AppointmentDate" required><br/>
         <label>Start Time</label>
         <input type="time" th:field="*{startTime}" placeholder="Enter Start Time" required><br/>
@@ -48,7 +49,9 @@
             <td th:text="${a.status}"></td>
             <td th:text="${a.doctorName}"></td>
             <td>
-                <button>Feedback</button>
+                <a th:href="@{/api/v1/appointments/{appointmentId}/consultations(appointmentId=${a.appointmentId})}">
+                    <button>CONSULTATION</button></a>
+                <a th:href="@{/api/v1/appointments/{appointmentId}/feedback(appointmentId=${a.appointmentId})}"><button >Feedback</button></a>
             </td>
         </tr>
         </tbody>
@@ -75,6 +78,8 @@
                 <a th:each="status : ${appointmentStatus}"
                    th:href="@{/api/v1/appointments/status/{appointmentId}/{status}(appointmentId=${a.appointmentId},status=${status})}">
                     <button  th:text="${status}"></button></a>
+                <a th:href="@{/api/v1/appointments/{appointmentId}/consultations(appointmentId=${a.appointmentId})}">
+                    <button>CONSULTATION</button></a>
             </td>
         </tr>
         </tbody>

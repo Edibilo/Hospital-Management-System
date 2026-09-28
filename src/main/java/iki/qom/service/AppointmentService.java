@@ -15,4 +15,6 @@ public interface AppointmentService {
 
     void updateStatus(Long appointmentId, AppointmentStatus status);
 
+    AppointmentDto findAppointmentById(Long appointmentId);
+
 }

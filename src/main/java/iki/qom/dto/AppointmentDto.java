@@ -13,9 +13,10 @@ public class AppointmentDto {
     private Long doctorId;
     private Long patientId;
     private AppointmentStatus status;
+    private String patientName;
 
     public AppointmentDto(Long id, LocalDate appointmentDate, LocalTime startTime, LocalTime endTime,
-                          Long doctorId, Long patientId, AppointmentStatus status) {
+                          Long doctorId, Long patientId, AppointmentStatus status, String patientName) {
         this.id = id;
         this.appointmentDate = appointmentDate;
         this.startTime = startTime;
@@ -23,6 +24,15 @@ public class AppointmentDto {
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.status = status;
+        this.patientName = patientName;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
     public AppointmentDto(){

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultation</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h2>Consultation</h2>
+    <p>Appointment # <strong th:text="${appointment.id}"></strong>
+        Patient Name <strong th:text="${appointment.patientName}"></strong>
+    </p>
+    <form method="post" th:action="@{/api/v1/appointments/{appointmentId}/consultations(appointmentId=${appointment.id})}"
+          th:object="${consultation}" >
+        <label>Blood Pressure
+            <input type="text" th:field="*{bloodPressure}" required placeholder="Enter blood pressure"><br/>
+        </label>
+        <label>Diagnosis
+            <input type="text" th:field="*{diagnosis}" required placeholder="Enter diagnosis"><br/>
+        </label>
+        <label>Symptoms
+            <input type="text" th:field="*{symptoms}" required placeholder="Enter symptoms"><br/>
+        </label>
+        <label>Temperature
+            <input type="number" th:field="*{temperature}" required placeholder="Enter Temperature"><br/>
+        </label>
+        <label>Treatment Notes
+            <input type="text" th:field="*{treatmentNotes}" required placeholder="Enter Treatment Notes"><br/>
+        </label>
+        <label>Weight
+            <input type="number" th:field="*{weight}" required placeholder="Enter Weight"><br/>
+        </label>
+        <button>Save</button><br/>
+    </form><br/>
+    <table border="2">
+        <thead>
+        <th>#</th>
+        <th>Blood Pressure</th>
+        <th>Diagnosis</th>
+        <th>Symptoms</th>
+        <th>Temperature</th>
+        <th>Treatment Notes</th>
+        <th>Weight</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="cons,stat : ${consultations}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${cons.bloodPressure}"></td>
+            <td th:text="${cons.diagnosis}"></td>
+            <td th:text="${cons.symptoms}"></td>
+            <td th:text="${cons.temperature}"></td>
+            <td th:text="${cons.treatmentNotes}"></td>
+            <td th:text="${cons.weight}"></td>
+            <td >
+                <a sec:authorize="!hasRole('PATIENT')"
+                th:href="@{/api/v1/appointments/{appointmentId}/consultations/{consultationId}/edit
+                (appointmentId=${appointment.id},consultationId=${cons.id})}">
+                    <button>Edit</button>
+                </a>
+                <a sec:authorize="!hasRole('PATIENT')"
+                   th:href="@{/api/v1/consultations/{consultationId}/delete(consultationId=${cons.id})}"
+                ><button>Delete</button>
+                </a>
+                <a sec:authorize="!hasRole('PATIENT')"><button>Lab Test</button></a>
+                <a><button>Prescription</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

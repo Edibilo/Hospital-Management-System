@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicine</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h2>Medicine </h2>
+    <table border="1">
+        <thead>
+        <th>#</th>
+        <th>Name</th>
+        <th>Strength</th>
+        <th> Available Quantity</th>
+        <th>Unit Price</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="med,stat : ${medicines}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${med.name}"></td>
+            <td th:text="${med.strength}"></td>
+            <td th:text="${med.quantityInStock}"></td>
+            <td th:text="${med.unitPrice}"></td>
+            <td>
+                <a th:href="@{/api/v1/medicines/{medicineId}/edit(medicineId=${med.id})}"><button>Edit</button></a>
+                <a th:href="@{/api/v1/medicines/{medicineId}/delete(medicineId=${med.id})}"><button>Delete</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table><br/>
+    <form method="post" th:object="${medicine}" th:action="@{/api/v1/medicines}">
+        <input type="hidden" th:field="*{id}">
+        <label>Medicine Name
+            <input type="text" th:field="*{name}" required placeholder="Enter Medicine Name">
+        </label><br/>
+        <label>Enter in mg
+            <input type="text" th:field="*{strength}" required placeholder="Enter in mg">
+        </label><br/>
+        <label>Enter Current Quantity
+            <input type="number" th:field="*{quantityInStock}" required placeholder="Enter Current Quantity">
+        </label><br/>
+        <label>Enter Unit Price
+            <input type="number" th:field="*{unitPrice}" required placeholder="Enter Unit Price">
+        </label><br/>
+        <button>Save</button>
+    </form>
+</div>
+</body>
+</html>

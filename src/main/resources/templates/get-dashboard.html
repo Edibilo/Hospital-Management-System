@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h2>My Dashboards</h2>
+    <p> Total Departments <strong th:text="${dashboard.totalDepartment}"></strong></p>
+</div>
+</body>
+</html>

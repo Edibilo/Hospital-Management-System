@@ -1,8 +1,10 @@
 package iki.qom.service.impl;
 
 import iki.qom.dto.UserDto;
+import iki.qom.entity.Department;
 import iki.qom.entity.User;
 import iki.qom.mapper.UserMapper;
+import iki.qom.repository.DepartmentRepository;
 import iki.qom.repository.UserRepository;
 import iki.qom.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -16,9 +18,11 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final DepartmentRepository departmentRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, DepartmentRepository departmentRepository) {
         this.userRepository = userRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
@@ -35,6 +39,9 @@ public class UserServiceImpl implements UserService {
         userDto.setEmail(user.getEmail());
         userDto.setAccountStatus(user.getAccountStatus());
         userDto.setRoleName(user.getRole().getName());
+        if(user.getDepartment()!=null){
+            userDto.setDepartmentName(user.getDepartment().getDepartmentName());
+        }
         return userDto;
     }
 

@@ -24,6 +24,7 @@ public class AppointmentMapper {
         appointmentDto.setStartTime(appointment.getStartTime());
         appointmentDto.setDoctorId(appointment.getDoctor().getId());
         appointmentDto.setPatientId(appointment.getPatient().getId());
+        appointmentDto.setPatientName(appointment.getPatient().getUsername());
         return appointmentDto;
     }
 }

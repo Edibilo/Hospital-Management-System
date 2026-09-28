@@ -2,6 +2,7 @@ package iki.qom.controller;
 
 import iki.qom.enumerator.AccountStatus;
 import iki.qom.enumerator.GenderStatus;
+import iki.qom.service.DepartmentService;
 import iki.qom.service.RoleService;
 import iki.qom.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,13 @@ public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final DepartmentService departmentService;
 
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService, RoleService roleService,
+                          DepartmentService departmentService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.departmentService = departmentService;
     }
 
     @GetMapping("profile")
@@ -34,6 +38,7 @@ public class UserController {
         model.addAttribute("gender", GenderStatus.values());
         model.addAttribute("account", AccountStatus.values());
         model.addAttribute("roles",roleService.getAllRoles());
+        model.addAttribute("departments",departmentService.getAllDepartments());
         return "get-register";
     }
 
@@ -49,6 +54,7 @@ public class UserController {
         model.addAttribute("gender", GenderStatus.values());
         model.addAttribute("account", AccountStatus.values());
         model.addAttribute("roles",roleService.getAllRoles());
+        model.addAttribute("departments",departmentService.getAllDepartments());
         return "get-register";
     }
 

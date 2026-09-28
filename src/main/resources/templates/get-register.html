@@ -27,6 +27,11 @@
             <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.name}"></option>
         </select><br/><br/>
         <input type="hidden" th:field="*{roleId}" sec:authorize="!hasRole('ADMIN')"><br/>
+        <select th:field="*{departmentId}" sec:authorize="hasAnyRole('ADMIN')">
+            <option value="">Select Department</option>
+            <option th:each="dep : ${departments}" th:text="${dep.departmentName}" th:value="${dep.id}"></option>
+        </select><br/>
+        <input type="hidden" th:field="*{departmentId}" sec:authorize="!hasRole('ADMIN')">
         <button th:text="${user.id==null ? 'SAVE' : 'UPDATE' }"></button>
     </form>
 </div>

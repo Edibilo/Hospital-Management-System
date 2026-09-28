@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Department</title>
+</head>
+<body>
+<div align="center">
+    <div th:replace="~{header :: header}"></div>
+    <h2>Department Form</h2>
+    <form method="post" th:object="${department}" th:action="@{/api/v1/departments}">
+        <input type="hidden" th:field="*{id}">
+        <input
+        type="text"
+        th:field="*{departmentName}"
+        placeholder="Department Name"
+        required
+        ><br/>
+
+        <input
+                type="text"
+                th:field="*{departmentDescription}"
+                placeholder="Department Description"
+                required
+        ><br/>
+        <button>Save</button>
+    </form><br/>
+
+    <table border="1">
+        <thead>
+        <th>#</th>
+        <th>Department Name</th>
+        <th>Department Description</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        <tr th:each="dep,stat : ${departments}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${dep.departmentName}"></td>
+            <td th:text="${dep.departmentDescription}"></td>
+            <td>
+                <a th:href="@{/api/v1/departments/{departmentId}/edit(departmentId=${dep.id})}"><button>Edit</button></a>
+                <a th:href="@{/api/v1/departments/{departmentId}/delete(departmentId=${dep.id})}"><button>Delete</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

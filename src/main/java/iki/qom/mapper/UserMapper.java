@@ -15,6 +15,10 @@ public class UserMapper {
         userDto.setGenderStatus(user.getGenderStatus());
         userDto.setRoleId(user.getRole().getId());
         userDto.setRoleName(user.getRole().getName());
+        if(user.getDepartment()!=null){
+            userDto.setDepartmentId(user.getDepartment().getId());
+        }
+
         return userDto;
     }
 
